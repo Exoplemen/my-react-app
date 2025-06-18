@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование билетов</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .search-form { display: flex; gap: 15px; margin-bottom: 20px; }
+        select, input, button { padding: 8px; }
+        button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        .seats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 20px 0; }
+        .seat { border: 1px solid #ddd; padding: 10px; text-align: center; cursor: pointer; }
+        .seat.selected { background-color: #4CAF50; color: white; }
+        .seat.booked { background-color: #f44336; color: white; cursor: not-allowed; }
+        .price { font-weight: bold; margin: 20px 0; }
+        #my-tickets { display: none; margin-top: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Бронирование билетов на поезд</h1>
+    
+    <div class="search-form">
+        <div>
+            <label for="direction">Direction:</label>
+            <select id="direction">
+                <option value="Odessa-Lviv">Odessa-Lviv</option>
+                <option value="Kyiv-Lviv">Kyiv-Lviv</option>
+                <option value="Kharkiv-Lviv">Kharkiv-Lviv</option>
+            </select>
+        </div>
+        
+        <div>
+            <label for="date">Date:</label>
+            <input type="date" id="date">
+        </div>
+        
+        <button onclick="searchTrains()">Search</button>
+    </div>
+    
+    <div id="train-info" style="display: none;">
+        <h2>Available seats</h2>
+        <div class="seats" id="seats-container"></div>
+        <div class="price">Total price: <span id="total-price">0</span></div>
+        <button onclick="bookTickets()">Book</button>
+    </div>
+    
+    <div id="my-tickets">
+        <h2>My tickets</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Direction</th>
+                    <th>Date</th>
+                    <th>Seat</th>
+                </tr>
+            </thead>
+            <tbody id="tickets-list"></tbody>
+        </table>
+    </div>
+    
+    <button onclick="showMyTickets()">My tickets</button>
+    <button onclick="showBookingForm()" style="display: none;">Back to booking</button>
+
+    <script>
+        // Mock data
+        let bookedTickets = [
+            { direction: "Odessa-Lviv", date: "24.07.2018", seat: 1 },
+            { direction: "Odessa-Lviv", date: "24.07.2018", seat: 2 }
+        ];
+        
+        let selectedSeats = [];
+        const seatPrice = 500;
+        
+        function searchTrains() {
+            const direction = document.getElementById('direction').value;
+            const date = document.getElementById('date').value;
+            
+            if (!date) {
+                alert("Please select date!");
+                return;
+            }
+            
+            // Show train info
+            document.getElementById('train-info').style.display = 'block';
+            
+            // Generate seats (10 available, some already booked)
+            const seatsContainer = document.getElementById('seats-container');
+            seatsContainer.innerHTML = '';
+            selectedSeats = [];
+            document.getElementById('total-price').textContent = '0';
+            
+            for (let i = 1; i <= 20; i++) {
+                const seat = document.createElement('div');
+                seat.className = 'seat';
+                seat.textContent = i;
+                
+                // Check if seat is already booked for this direction and date
+                const formattedDate = new Date(date).toLocaleDateString('ru-RU');
+                const isBooked = bookedTickets.some(ticket => 
+                    ticket.direction === direction && 
+                    ticket.date === formattedDate && 
+                    ticket.seat === i
+                );
+                
+                if (isBooked) {
+                    seat.classList.add('booked');
+                } else {
+                    seat.addEventListener('click', function() {
+                        this.classList.toggle('selected');
+                        
+                        if (this.classList.contains('selected')) {
+                            selectedSeats.push(i);
+                        } else {
+                            selectedSeats = selectedSeats.filter(seat => seat !== i);
+                        }
+                        
+                        document.getElementById('total-price').textContent = selectedSeats.length * seatPrice;
+                    });
+                }
+                
+                seatsContainer.appendChild(seat);
+            }
+        }
+        
+        function bookTickets() {
+            if (selectedSeats.length === 0) {
+                alert("Please select at least one seat!");
+                return;
+            }
+            
+            const direction = document.getElementById('direction').value;
+            const date = document.getElementById('date').value;
+            const formattedDate = new Date(date).toLocaleDateString('ru-RU');
+            
+            // Add to booked tickets
+            selectedSeats.forEach(seat => {
+                bookedTickets.push({
+                    direction,
+                    date: formattedDate,
+                    seat
+                });
+            });
+            
+            alert(`Successfully booked ${selectedSeats.length} tickets!`);
+            searchTrains(); // Refresh view
+        }
+        
+        function showMyTickets() {
+            document.getElementById('train-info').style.display = 'none';
+            document.getElementById('my-tickets').style.display = 'block';
+            
+            const ticketsList = document.getElementById('tickets-list');
+            ticketsList.innerHTML = '';
+            
+            if (bookedTickets.length === 0) {
+                ticketsList.innerHTML = '<tr><td colspan="3">No tickets booked yet.</td></tr>';
+                return;
+            }
+            
+            bookedTickets.forEach(ticket => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${ticket.direction}</td>
+                    <td>${ticket.date}</td>
+                    <td>${ticket.seat}</td>
+                `;
+                ticketsList.appendChild(row);
+            });
+        }
+        
+        function showBookingForm() {
+            document.getElementById('my-tickets').style.display = 'none';
+            document.getElementById('train-info').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

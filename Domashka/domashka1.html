@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        const table = document.getElementById('table');
+        for (let x = 1; x <= 3; x++) {
+            const row = table.insertRow();
+            for (let y = 1; y <= 3; y++) {
+                const cell = row.insertCell();
+                cell.textContent = `Ячейка ${x}-${y}`;
+            }
+        }
+    </script>
+</body>
+</html>

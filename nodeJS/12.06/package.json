@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "csurf": "^1.11.0",
+    "escape-html": "^1.0.3",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.0",
+    "uuid": "^11.1.0"
+  }
+}

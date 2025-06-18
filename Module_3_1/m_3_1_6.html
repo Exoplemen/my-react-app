@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 200px; /* Для демонстрации нижнего позиционирования */
+        }
+        .btn {
+            position: relative;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .tooltip {
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            white-space: nowrap;
+            z-index: 100;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            border-width: 5px;
+            border-style: solid;
+        }
+        /* Стили для подсказки сверху */
+        .tooltip.top {
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 10px;
+        }
+        .tooltip.top::after {
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-color: #333 transparent transparent transparent;
+        }
+        /* Стили для подсказки снизу */
+        .tooltip.bottom {
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 10px;
+        }
+        .tooltip.bottom::after {
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-color: transparent transparent #333 transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="buttons-container">
+        <button class="btn" data-tooltip="Tool tip 1">Button 1</button>
+        <button class="btn" data-tooltip="Tool tip 2">Button 2</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn');
+            
+            buttons.forEach(btn => {
+                // Создаем элемент подсказки
+                const tooltip = document.createElement('div');
+                tooltip.className = 'tooltip top';
+                tooltip.textContent = btn.getAttribute('data-tooltip');
+                btn.appendChild(tooltip);
+                
+                // Обработчики событий
+                btn.addEventListener('mouseenter', function() {
+                    const btnRect = this.getBoundingClientRect();
+                    const tooltip = this.querySelector('.tooltip');
+                    const tooltipHeight = tooltip.offsetHeight;
+                    
+                    // Проверяем, достаточно ли места сверху
+                    if (btnRect.top - tooltipHeight - 15 > 0) {
+                        tooltip.classList.remove('bottom');
+                        tooltip.classList.add('top');
+                    } else {
+                        tooltip.classList.remove('top');
+                        tooltip.classList.add('bottom');
+                    }
+                    
+                    // Показываем подсказку
+                    tooltip.style.visibility = 'visible';
+                    tooltip.style.opacity = '1';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    const tooltip = this.querySelector('.tooltip');
+                    tooltip.style.visibility = 'hidden';
+                    tooltip.style.opacity = '0';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

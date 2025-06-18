@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .input-container {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .warning {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container">
+        <label for="nameInput">Введите свое имя (имя не может содержать цифр):</label>
+        <input type="text" id="nameInput" placeholder="Суетин Лев">
+        <div id="warningMessage" class="warning">имя не может содержать цифр - цифры в именах недопустимы!
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nameInput = document.getElementById('nameInput');
+            const warningMessage = document.getElementById('warningMessage');
+            
+            nameInput.addEventListener('input', function(e) {
+                // Проверяем каждый введенный символ
+                const hasDigits = /\d/.test(this.value);
+                if (hasDigits) {
+                    // Удаляем цифры из значения
+                    this.value = this.value.replace(/\d/g, '');
+                    // Показываем предупреждение
+                    warningMessage.style.display = 'block';
+                    // Скрываем предупреждение через 2 секунды
+                    setTimeout(function() {
+                        warningMessage.style.display = 'none';
+                    }, 2000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

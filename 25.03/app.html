@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Color Palette</h1>
+    
+    <div class="color-form">
+        <h2>Create new color</h2>
+        <form id="colorForm">
+            <div class="form-group">
+                <label for="colorName">Color:</label>
+                <input type="text" id="colorName" name="colorName" required>
+                <div id="nameError" class="error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="colorType">Type:</label>
+                <select id="colorType" name="colorType" required>
+                    <option value="RGB">RGB</option>
+                    <option value="RGBA">RGBA</option>
+                    <option value="HEX">HEX</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="colorCode">Code:</label>
+                <input type="text" id="colorCode" name="colorCode" required>
+                <div id="codeError" class="error"></div>
+            </div>
+            
+            <button type="submit">Save</button>
+        </form>
+    </div>
+    
+    <div class="color-list">
+        <h2>All colors</h2>
+        <div id="colorsContainer"></div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

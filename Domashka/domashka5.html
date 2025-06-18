@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <select id="dropdown"></select>
+    <script>
+        const dropdown = document.getElementById('dropdown');
+        
+        for (let i = 1; i <= 5; i++) {
+            const option = document.createElement('option');
+            option.value = `option${i}`;
+            option.textContent = `Вариант ${i}`;
+            dropdown.appendChild(option);
+        }
+        
+        dropdown.selectedIndex = 2;
+    </script>
+</body>
+</html>

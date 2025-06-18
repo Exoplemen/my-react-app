@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стилизация текста</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .style-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+        textarea { width: 100%; height: 150px; margin-bottom: 15px; }
+        button { padding: 10px 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        #result { margin-top: 30px; border: 1px solid #ddd; padding: 20px; }
+        .bold { font-weight: bold; }
+        .underline { text-decoration: underline; }
+        .italic { font-style: italic; }
+        .left { text-align: left; }
+        .right { text-align: right; }
+        .justify { text-align: justify; }
+    </style>
+</head>
+<body>
+    <h1>Стилизация текста</h1>
+    
+    <textarea id="text-input" placeholder="Введите текст для стилизации..."></textarea>
+    
+    <div class="style-options">
+        <label><input type="checkbox" id="bold"> Bold</label>
+        <label><input type="checkbox" id="underline"> Underline</label>
+        <label><input type="checkbox" id="italic"> Italics</label>
+        <label><input type="radio" name="align" value="left"> Left</label>
+        <label><input type="radio" name="align" value="right"> Right</label>
+        <label><input type="radio" name="align" value="justify" checked> Justify</label>
+    </div>
+    
+    <button onclick="showText()">Show text</button>
+    
+    <div id="result"></div>
+
+    <script>
+        function showText() {
+            const text = document.getElementById('text-input').value;
+            if (!text.trim()) {
+                alert("Please enter some text!");
+                return;
+            }
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = text;
+
+            if (document.getElementById('bold').checked) {
+                resultDiv.classList.add('bold');
+            } else {
+                resultDiv.classList.remove('bold');
+            }
+            if (document.getElementById('underline').checked) {
+                resultDiv.classList.add('underline');
+            } else {
+                resultDiv.classList.remove('underline');
+            }
+            if (document.getElementById('italic').checked) {
+                resultDiv.classList.add('italic');
+            } else {
+                resultDiv.classList.remove('italic');
+            }
+
+            const align = document.querySelector('input[name="align"]:checked').value;
+            resultDiv.classList.remove('left', 'right', 'justify');
+            resultDiv.classList.add(align);
+        }
+    </script>
+</body>
+</html>

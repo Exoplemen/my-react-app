@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        
+        .directory-tree {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .directory-tree ul {
+            list-style-type: none;
+            padding-left: 20px;
+            display: block;
+        }
+        
+        .directory-tree li {
+            position: relative;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        
+        .directory-tree li:before {
+            content: "📁 ";
+        }
+        
+        .directory-tree li:hover {
+            font-weight: bold;
+        }
+        
+        .directory-tree li.collapsed > ul {
+            display: none;
+        }
+        
+        .directory-tree li.collapsed:before {
+            content: "📂 ";
+        }
+        
+        .disk-name {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Дерево директорий</h2>
+    <ul class="directory-tree">
+        <li>
+            <span class="disk-name">This PC</span>
+            <ul>
+                <li>
+                    <span class="disk-name">Local Disk (C:)</span>
+                    <ul>
+                        <li>Program Files</li>
+                        <li>Users</li>
+                        <li>Windows</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="disk-name">Local Disk (D:)</span>
+                    <ul>
+                        <li>
+                            New Folder 1
+                            <ul>
+                                <li>New Folder 2</li>
+                                <li>New Folder 3</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="disk-name">Local Disk (E:)</span>
+                    <ul></ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const treeItems = document.querySelectorAll('.directory-tree li');
+            // Инициализация - все папки развернуты
+            treeItems.forEach(item => {
+                if (item.querySelector('ul')) {
+                    item.classList.add('collapsed');
+                }
+            });
+            // Обработчик клика
+            document.querySelector('.directory-tree').addEventListener('click', function(e) {
+                const target = e.target.closest('li');
+                if (!target) return;
+                
+                e.stopPropagation();
+
+                if (target.querySelector('ul')) {
+                    target.classList.toggle('collapsed');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

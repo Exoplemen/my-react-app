@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .question { margin-bottom: 30px; border-bottom: 1px solid #ddd; padding-bottom: 20px; }
+        .options { margin: 15px 0; }
+        button { padding: 8px 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        #result { display: none; margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Тест</h1>
+    
+    <div id="quiz">
+        <div class="question" id="q1">
+            <p>1] How many letters are there in the word "Hello"?</p><!-- Когда пишу ')' подсвечивает красным-->
+            <div class="options">
+                <label><input type="radio" name="q1" value="5"> 5</label><br>
+                <label><input type="radio" name="q1" value="2"> 2</label>
+            </div>
+            <button onclick="nextQuestion('q1', 'q2')">Next</button>
+        </div>
+        
+        <div class="question" id="q2" style="display: none;">
+             <p>2] How many letters are there in the word "World"?</p><!-- Когда пишу ')' подсвечивает красным-->
+            <div class="options">
+                <label><input type="radio" name="q2" value="4"> 4</label><br>
+                <label><input type="radio" name="q2" value="5"> 5</label>
+            </div>
+            <button onclick="finishQuiz()">Finish</button>
+        </div>
+    </div>
+    
+    <div id="result"></div>
+
+    <script>
+        const correctAnswers = {
+            q1: "5",
+            q2: "5"
+        };
+        
+        let score = 0;
+        
+        function nextQuestion(currentId, nextId) {
+            const currentQuestion = document.getElementById(currentId);
+            const selectedOption = document.querySelector(`input[name="${currentId}"]:checked`);
+            
+            if (!selectedOption) {
+                alert("Please select an answer!");
+                return;
+            }
+            
+            if (selectedOption.value === correctAnswers[currentId]) {
+                score++;
+            }
+            
+            currentQuestion.style.display = 'none';
+            document.getElementById(nextId).style.display = 'block';
+        }
+        
+        function finishQuiz() {
+            const selectedOption = document.querySelector('input[name="q2"]:checked');
+            
+            if (!selectedOption) {
+                alert("Please select an answer!");
+                return;
+            }
+            
+            if (selectedOption.value === correctAnswers['q2']) {
+                score++;
+            }
+            
+            const totalQuestions = Object.keys(correctAnswers).length;
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = `Result: ${score} correct answers to ${totalQuestions} questions.`;
+            
+            document.getElementById('q2').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

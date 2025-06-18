@@ -1,0 +1,34 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title= title
+    style.
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+  body
+    h1= title
+    table
+      thead
+        tr
+          th ID
+          th Имя
+          th Возраст
+          th Оценка
+      tbody
+        each student in students
+          tr
+            td= student.id
+            td= student.name
+            td= student.age
+            td= student.grade
