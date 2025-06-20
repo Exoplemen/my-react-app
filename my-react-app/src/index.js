@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import UserInfo from'./components/UserInfo'
-import Product from'./components/UserList'
-import WeatherCard from'./components/WeatherCard'
-import Product from'./components/Product'
-import ClickCounterButton from'./components/ClickCounterButton'
+import Product from'./components/8.04/UserList'
+import WeatherCard from'./components/8.04/WeatherCard'
+import Product from'./components/8.04/Product'
+import ClickCounterButton from'./components/8.04/ClickCounterButton'
 //10.04
 import UserInfo from'./components/10.04/ImageGallery'
 import UserInfo from'./components/10.04/LimitedTextArea'
