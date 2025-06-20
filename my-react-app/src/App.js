@@ -1,4 +1,3 @@
-
 import ImageGallery from './ImageGallery';
 import PomodoroTimer from './PomodoroTimer';
 import SimpleTimer from './SimpleTimer';
