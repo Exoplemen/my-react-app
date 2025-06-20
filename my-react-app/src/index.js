@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import UserInfo from'./components/UserInfo'
+//8.04
 import Product from'./components/8.04/UserList'
 import WeatherCard from'./components/8.04/WeatherCard'
 import Product from'./components/8.04/Product'
