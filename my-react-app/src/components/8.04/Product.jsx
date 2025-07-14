@@ -7,4 +7,4 @@ function Product({ name, price, onBuy }) {
     </div>
   );
 }
-export default Product
+export default Product;
