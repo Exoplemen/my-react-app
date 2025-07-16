@@ -10,6 +10,7 @@ import WeatherCard from './components/8.04/WeatherCard';
 import ClickCounterButton from './components/8.04/ClickCounterButton';
 import Product from './components/8.04/Product';
 import UserList from './components/8.04/UserList';
+import DraggableList from './components/22.04/Drag-and-Drop';
 
 function App() {
   // 8.04
@@ -34,6 +35,23 @@ function App() {
     'https://via.placeholder.com/500x300/3357FF/FFFFFF?text=Image+3',
     'https://via.placeholder.com/500x300/F333FF/FFFFFF?text=Image+4'
   ];
+
+  // 22.04
+  const [items, setItems] = useState([
+    { id: 1, text: 'Помыть посуду' },
+    { id: 2, text: 'Сделать домашку' },
+    { id: 3, text: 'Купить продукты' },
+    { id: 4, text: 'Позвонить маме' },
+    { id: 5, text: 'Заняться спортом' }
+  ]);
+
+  const handleAddItem = () => {
+    const newItem = {
+      id: Date.now(),
+      text: `Новая задача ${items.length + 1}`
+    };
+    setItems([...items, newItem]);
+  };
 
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
@@ -87,6 +105,25 @@ function App() {
         <h2>Слайдер изображений</h2>
         <ImageSlider />
       </section>
+
+      {/* 22.04 */}  
+      <div className="app">
+      <h1>Мой Drag-and-Drop Список</h1>
+      <button onClick={handleAddItem} className="add-button">
+        Добавить элемент
+      </button>
+      
+      <DraggableList
+        items={items}
+        onOrderChange={(newOrder) => setItems(newOrder)}
+        renderItem={(item, index) => (
+          <div className="list-item">
+            <span className="item-text">{item.text}</span>
+            <span className="item-position">Позиция: {index + 1}</span>
+          </div>
+        )}
+      />
+    </div>
     </div>
   );
 }
